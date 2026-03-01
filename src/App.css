@@ -1,0 +1,206 @@
+.app-shell {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 2.4rem 1.25rem;
+}
+
+.app-panel {
+  backdrop-filter: blur(8px);
+  background: linear-gradient(165deg, rgba(13, 37, 41, 0.92), rgba(8, 24, 27, 0.95));
+  border: 1px solid rgba(129, 204, 193, 0.28);
+  border-radius: 20px;
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.2) inset,
+    0 32px 80px rgba(1, 14, 12, 0.45);
+  max-width: 760px;
+  padding: 2rem;
+  width: 100%;
+}
+
+.app-header h1 {
+  font-size: clamp(1.75rem, 3vw, 2.4rem);
+  letter-spacing: 0.02em;
+  margin: 0.4rem 0 0.55rem;
+}
+
+.eyebrow {
+  color: #8be1cb;
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.subtitle {
+  color: #c9ebe4;
+  line-height: 1.55;
+  margin: 0;
+  max-width: 60ch;
+}
+
+.status-card,
+.transfer-form,
+.tx-card {
+  background: rgba(12, 41, 42, 0.56);
+  border: 1px solid rgba(127, 201, 191, 0.24);
+  border-radius: 14px;
+  margin-top: 1.2rem;
+  padding: 1rem;
+}
+
+.status-row {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.55rem;
+}
+
+.status-row:last-child {
+  margin-bottom: 0;
+}
+
+.status-label {
+  color: #a8d6cc;
+  font-size: 0.9rem;
+}
+
+.badge {
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  padding: 0.2rem 0.65rem;
+  text-transform: uppercase;
+}
+
+.badge.online {
+  background: rgba(64, 190, 139, 0.2);
+  border: 1px solid rgba(114, 233, 185, 0.35);
+  color: #a9f0d2;
+}
+
+.badge.offline {
+  background: rgba(184, 97, 97, 0.18);
+  border: 1px solid rgba(218, 140, 140, 0.3);
+  color: #f4c0c0;
+}
+
+.status-actions {
+  margin-top: 0.9rem;
+}
+
+.transfer-form {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.transfer-form label {
+  color: #d5efe9;
+  display: grid;
+  font-size: 0.95rem;
+  font-weight: 600;
+  gap: 0.45rem;
+}
+
+input {
+  background: rgba(7, 23, 25, 0.72);
+  border: 1px solid rgba(129, 204, 193, 0.35);
+  border-radius: 10px;
+  color: #f6fffb;
+  font-size: 0.98rem;
+  outline: none;
+  padding: 0.68rem 0.72rem;
+}
+
+input:focus {
+  border-color: rgba(121, 238, 203, 0.82);
+  box-shadow: 0 0 0 3px rgba(113, 223, 190, 0.2);
+}
+
+.split {
+  display: grid;
+  gap: 0.8rem;
+  grid-template-columns: 1fr 170px;
+}
+
+.button {
+  border: 0;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  padding: 0.7rem 1rem;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+  transform: none;
+}
+
+.button:not(:disabled):hover {
+  transform: translateY(-1px);
+}
+
+.button-primary {
+  background: linear-gradient(120deg, #7df2c4, #50ccac);
+  color: #042019;
+}
+
+.button-secondary {
+  background: rgba(12, 34, 39, 0.8);
+  border: 1px solid rgba(130, 207, 196, 0.35);
+  color: #caece4;
+}
+
+.button.full {
+  width: 100%;
+}
+
+.mono {
+  font-family: "JetBrains Mono", "SFMono-Regular", Menlo, Consolas, monospace;
+}
+
+.wrap {
+  overflow-wrap: anywhere;
+}
+
+.hint {
+  color: #b6ddd4;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.hint.error {
+  color: #ffc5c5;
+}
+
+.tx-card h2 {
+  font-size: 1.05rem;
+  margin: 0 0 0.55rem;
+}
+
+.tx-card a {
+  color: #8fead0;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.tx-card a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 700px) {
+  .app-panel {
+    padding: 1.25rem;
+  }
+
+  .split {
+    grid-template-columns: 1fr;
+  }
+}
