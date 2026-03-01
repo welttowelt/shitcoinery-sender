@@ -299,12 +299,18 @@ function App() {
     <main className="app-shell">
       <section className="app-panel">
         <header className="app-header">
-          <p className="eyebrow">ScrollSage Utility</p>
-          <h1>Cartridge Token Transfer</h1>
+          <p className="eyebrow">Night City Transfer Desk</p>
+          <h1 className="title-glitch" data-text="Shitcoinery Sender">
+            Shitcoinery Sender
+          </h1>
           <p className="subtitle">
-            Connect your own Cartridge wallet and send ERC-20 tokens on Starknet
-            mainnet.
+            High-tech, low-life token sender for Starknet mainnet. Connect your
+            Cartridge wallet and move STRK, SLAY, or custom assets.
           </p>
+          <div className="signal-row">
+            <span className="signal-tag">Mainnet</span>
+            <span className="signal-tag signal-tag-cyan">Controller Wallet</span>
+          </div>
         </header>
 
         <section className="status-card">
@@ -420,7 +426,7 @@ function App() {
 
         {transactionHash ? (
           <section className="tx-card">
-            <h2>Latest Transaction</h2>
+            <h2>Last Broadcast</h2>
             <p className="mono wrap">{transactionHash}</p>
             <p className="hint">
               Status:{" "}
@@ -433,7 +439,7 @@ function App() {
               target="_blank"
               rel="noreferrer"
             >
-              View on Starkscan
+              View on Vladscan
             </a>
           </section>
         ) : null}

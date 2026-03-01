@@ -1,8 +1,16 @@
-@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500&family=Space+Grotesk:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500&family=Orbitron:wght@600;700;800&family=Rajdhani:wght@500;600;700&display=swap");
 
 :root {
-  color: #e9fcf7;
-  font-family: "Space Grotesk", "Segoe UI", sans-serif;
+  --cp-yellow: #fcee0c;
+  --cp-cyan: #00ffff;
+  --cp-violet: #8a2be2;
+  --cp-green: #39ff14;
+  --cp-pink: #ff2ea6;
+  --cp-bg-deep: #040615;
+  --cp-bg-charcoal: #0b1027;
+  --cp-text: #ecf2ff;
+  color: var(--cp-text);
+  font-family: "Rajdhani", "Segoe UI", sans-serif;
   font-synthesis: none;
   line-height: 1.5;
   text-rendering: optimizeLegibility;
@@ -24,9 +32,34 @@ body,
 
 body {
   background:
-    radial-gradient(circle at 10% 10%, rgba(42, 122, 107, 0.2), transparent 35%),
-    radial-gradient(circle at 90% 0%, rgba(129, 230, 196, 0.12), transparent 36%),
-    linear-gradient(140deg, #041011 0%, #071d1f 48%, #021113 100%);
+    radial-gradient(circle at 10% 6%, rgba(252, 238, 12, 0.12), transparent 30%),
+    radial-gradient(circle at 90% 14%, rgba(0, 255, 255, 0.15), transparent 36%),
+    radial-gradient(circle at 88% 82%, rgba(138, 43, 226, 0.24), transparent 34%),
+    linear-gradient(150deg, var(--cp-bg-deep), var(--cp-bg-charcoal) 42%, #050711 100%);
   margin: 0;
   min-width: 320px;
+  overflow-x: hidden;
+  position: relative;
+}
+
+body::after {
+  animation: scanline 6s linear infinite;
+  background: linear-gradient(
+    to bottom,
+    transparent 0,
+    rgba(0, 255, 255, 0.08) 50%,
+    transparent 100%
+  );
+  content: "";
+  inset: 0;
+  opacity: 0.32;
+  pointer-events: none;
+  position: fixed;
+  transform: translateY(-100%);
+}
+
+@keyframes scanline {
+  to {
+    transform: translateY(100%);
+  }
 }

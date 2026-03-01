@@ -1,4 +1,4 @@
-# ScrollSage Cartridge Web Tool
+# Shitcoinery Sender
 
 A small web app that lets anyone:
 
@@ -47,7 +47,7 @@ npm run preview
 
 After GitHub Actions deploys, the site is available at:
 
-`https://welttowelt.github.io/scrollsage-cartridge-web-tool/`
+`https://welttowelt.github.io/shitcoinery-sender/`
 
 ## Notes
 
