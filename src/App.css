@@ -189,6 +189,28 @@
   gap: 0.42rem;
 }
 
+.amount-field {
+  align-content: start;
+}
+
+.field-head {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.balance-pill {
+  border: 1px solid rgba(0, 255, 255, 0.35);
+  border-radius: 999px;
+  color: #a7f9ff;
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  padding: 0.12rem 0.45rem;
+  text-transform: uppercase;
+}
+
 input,
 select {
   background: rgba(8, 15, 38, 0.92);
@@ -225,6 +247,31 @@ select:focus {
   display: grid;
   gap: 0.78rem;
   grid-template-columns: 1fr 165px;
+}
+
+.quick-actions {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.chip-button {
+  background: rgba(0, 255, 255, 0.08);
+  border: 1px solid rgba(0, 255, 255, 0.34);
+  border-radius: 999px;
+  color: var(--cp-cyan);
+  cursor: pointer;
+  font-family: "Rajdhani", sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  min-width: 56px;
+  padding: 0.18rem 0.6rem;
+  text-transform: uppercase;
+}
+
+.chip-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
 }
 
 .button {

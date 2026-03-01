@@ -1,6 +1,7 @@
 import { useMemo, useState, type ChangeEvent, type FormEvent } from "react";
 import {
   useAccount,
+  useBalance,
   useConnect,
   useDisconnect,
   useSendTransaction,
@@ -83,6 +84,31 @@ function parseAmountToUnits(amountInput: string, decimalsInput: string): bigint 
     : 0n;
 
   return whole * base + fraction;
+}
+
+function formatUnitsForInput(units: bigint, decimals: number): string {
+  if (decimals <= 0) return units.toString();
+
+  const absolute = units < 0n ? units * -1n : units;
+  const base = 10n ** BigInt(decimals);
+  const whole = absolute / base;
+  const fraction = absolute % base;
+  const fractionRaw = fraction.toString().padStart(decimals, "0");
+  const fractionTrimmed = fractionRaw.replace(/0+$/, "");
+  const sign = units < 0n ? "-" : "";
+
+  if (!fractionTrimmed) return `${sign}${whole.toString()}`;
+  return `${sign}${whole.toString()}.${fractionTrimmed}`;
+}
+
+function clampDisplayAmount(value: string, maxFractionDigits = 6): string {
+  if (!value.includes(".")) return value;
+
+  const [whole, fraction] = value.split(".");
+  const trimmed = fraction.replace(/0+$/, "");
+  if (!trimmed) return whole;
+
+  return `${whole}.${trimmed.slice(0, maxFractionDigits)}`;
 }
 
 function extractTxHash(result: unknown): string | null {
@@ -182,6 +208,19 @@ function App() {
     [connectors],
   );
 
+  const tokenAddressTrimmed = form.tokenAddress.trim();
+  const isTokenAddressValid = HEX_ADDRESS_PATTERN.test(tokenAddressTrimmed);
+  const balanceToken = isTokenAddressValid
+    ? (tokenAddressTrimmed.toLowerCase() as `0x${string}`)
+    : undefined;
+
+  const walletBalance = useBalance({
+    token: balanceToken,
+    address: address as `0x${string}` | undefined,
+    enabled: Boolean(isConnected && address && balanceToken),
+    watch: true,
+  });
+
   const unitsPreview = useMemo(() => {
     if (!form.amount.trim() || !form.decimals.trim()) return "0";
     try {
@@ -193,6 +232,24 @@ function App() {
 
   const combinedError =
     validationError ?? (sendError ? formatError(sendError) : null);
+
+  const balanceLabel = useMemo(() => {
+    if (!isConnected) return "Balance: connect wallet";
+    if (!isTokenAddressValid) return "Balance: invalid token address";
+    if (walletBalance.isPending || walletBalance.isFetching) {
+      return "Balance: loading...";
+    }
+    if (walletBalance.isError || !walletBalance.data) return "Balance: unavailable";
+
+    return `Balance: ${clampDisplayAmount(walletBalance.data.formatted)} ${walletBalance.data.symbol}`;
+  }, [
+    isConnected,
+    isTokenAddressValid,
+    walletBalance.data,
+    walletBalance.isError,
+    walletBalance.isFetching,
+    walletBalance.isPending,
+  ]);
 
   const onFieldChange =
     (field: keyof TransferFormState) =>
@@ -295,6 +352,20 @@ function App() {
     }
   };
 
+  const onFillPercent = (percent: 50 | 100) => {
+    const balanceData = walletBalance.data;
+    if (!balanceData) return;
+
+    const sourceValue = balanceData.value;
+    const units = percent === 100 ? sourceValue : sourceValue / 2n;
+
+    setForm((current) => ({
+      ...current,
+      amount: formatUnitsForInput(units, balanceData.decimals),
+      decimals: String(balanceData.decimals),
+    }));
+  };
+
   return (
     <main className="app-shell">
       <section className="app-panel">
@@ -387,8 +458,11 @@ function App() {
             />
           </label>
           <div className="split">
-            <label>
-              Amount
+            <label className="amount-field">
+              <span className="field-head">
+                <span>Amount</span>
+                <span className="balance-pill">{balanceLabel}</span>
+              </span>
               <input
                 value={form.amount}
                 onChange={onFieldChange("amount")}
@@ -396,6 +470,24 @@ function App() {
                 autoComplete="off"
                 required
               />
+              <span className="quick-actions">
+                <button
+                  className="chip-button"
+                  type="button"
+                  onClick={() => onFillPercent(50)}
+                  disabled={!walletBalance.data || walletBalance.data.value === 0n}
+                >
+                  50%
+                </button>
+                <button
+                  className="chip-button"
+                  type="button"
+                  onClick={() => onFillPercent(100)}
+                  disabled={!walletBalance.data || walletBalance.data.value === 0n}
+                >
+                  100%
+                </button>
+              </span>
             </label>
             <label>
               Decimals
